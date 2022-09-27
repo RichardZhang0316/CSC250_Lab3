@@ -117,6 +117,7 @@ int processCharacters(char filename[], struct WordFreq** listPtr, int* numPtr)
                 tempList = (struct WordFreq *) malloc((*numPtr + 1) * sizeof(struct WordFreq));
 
                 /* copy the old list to temp_list */
+                /* we can also use memcpy(tempList, list, *numPtr*sizeof(struct WordFreq)) */
                 for(i = 0; i < *numPtr; i++) {
                     tempList[i] = (*listPtr)[i];
                     tempList[i].word = (*listPtr)[i].word;
@@ -126,7 +127,7 @@ int processCharacters(char filename[], struct WordFreq** listPtr, int* numPtr)
             
                 tempList[*numPtr].word = (char *) malloc(strlen(buffer) + 1);
                 /* copy the word over */
-                strcpy(tempList[*numPtr].word, buffer);
+                strncpy(tempList[*numPtr].word, buffer, strlen(buffer) + 1);
                 tempList[*numPtr].count = 1;
                 /* let's free the old list (no memory leaks) */
                 if(*listPtr) {
